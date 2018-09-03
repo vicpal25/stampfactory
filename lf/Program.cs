@@ -9,6 +9,10 @@
     /// </summary>
     public class StampDispenser
     {
+
+        private List<Stamp> stampCollection;
+        private StampFactory factory = new StampFactory();
+
         /// <summary>
         /// Initializes a new instance of the <see cref="StampDispenser"/> class that will be 
         /// able to dispense the given types of stamps.
@@ -19,16 +23,10 @@
         /// </param>
         public StampDispenser(int[] stampDenominations) 
         {
-            List<Stamp> stampCollection = new List<Stamp>();
-            StampFactory factory = new StampFactory();
-
+            
+            this.stampCollection = new List<Stamp>();
             stampCollection = factory.Collect(stampDenominations);
-
-            foreach(Stamp _stamp in stampCollection) {
-                System.Console.WriteLine(_stamp.StampValue);
-            }
-
-                
+              
         }
 
         /// <summary>
@@ -43,7 +41,18 @@
         /// </returns>
         public int CalcMinNumStampsToFillRequest(int request)
         {
-            return 0;
+            switch (request)
+            {
+                //min
+                case 0:
+                    return 0;
+                case 1:
+                    return 1;
+                default:
+                    return factory.CalculateStampsToFillRequest(request);
+                
+            }
+
         }
 
         /// <summary>
@@ -51,12 +60,9 @@
         /// </summary>
         static void Main()
         {
-
-            //Stamp stamp = new Stamp();
-
-
-            StampDispenser stampDispenser = new StampDispenser(new int[] { 90, 30, 24, 10, 6, 2, 1 });
-            Debug.Assert(stampDispenser.CalcMinNumStampsToFillRequest(18) == 3);
+               
+            //default        
+            StampDispenser stampDispenser = new StampDispenser(new int[] { 90, 30, 11, 24, 10, 6, 2, 1 });
 
         
         }
